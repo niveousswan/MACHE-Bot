@@ -4,7 +4,7 @@ from jabebot import ask, append_interaction_to_chat_log
 
 app = Flask(__name__)
 # if for some reason your conversation with the bot gets weird, change the secret key 
-app.config['SECRET_KEY'] = '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'
+app.config['SECRET_KEY'] = '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'
 
 @app.route('/jabebot', methods=['POST'])
 def jabe():
