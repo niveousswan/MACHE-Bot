@@ -1,2 +1,2 @@
-# gpt3-jabebot
+# MACHE-Bot for EAL
  Chatbot app
