@@ -4,7 +4,39 @@ from flask import Flask, request
 import os
 import openai
 
-load_dotenv()
+class Generator(nn.Module):
+    def __init__(self, config):
+        super(Generator, self).__init__()
+        self.gpt = GPT2Model.from_pretrained(config['model'])
+
+    def forward(self, z):
+        outputs = self.gpt(z)
+        return outputs.last_hidden_state
+
+def load_config(file_path):
+    with open(file_path, 'r') as f:
+        return json.load(f)
+
+def main():
+    # Load configurations
+    humour_config = load_config('config_humour.json')
+    culture_config = load_config('config_culture.json')
+    empathy_config = load_config('config_empathy.json')
+
+    # Initialize generators
+    humour_gen = Generator(humour_config)
+    culture_gen = Generator(culture_config)
+    empathy_gen = Generator(empathy_config)
+
+    # Example: Generating a sample
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+    sample_text = tokenizer.encode("Example text input", return_tensors='pt')
+    print("Humour Output:", humour_gen(sample_text))
+    print("Culture Output:", culture_gen(sample_text))
+    print("Empathy Output:", empathy_gen(sample_text))
+
+if __name__ == "__main__":
+    main()load_dotenv()
 #openai.api_key = os.getenv("OPENAI_API_KEY")
 openai.api_key = "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"
 completion = openai.Completion()
